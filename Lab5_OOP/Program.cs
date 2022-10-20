@@ -2,6 +2,7 @@
 using System.Windows;
 using MyList;
 
+
 namespace Lab5_OOP
 {
     class Program
@@ -56,10 +57,22 @@ namespace Lab5_OOP
              * который производит вычисления на основе этого свойства. 
              * Продемонстрируйте работу с этим классом. */
             ListQueue listQueue = new ListQueue();
+            listQueue.Add(new Person("Андреев", "Алексей", "Даниилович"));
+            listQueue.Add(new Person("Степанов", "Иван", "Павлович"));
+            listQueue.Add(new Person("Платонова", "Марьям", "Максимовна"));
+            listQueue.Add(new Person("Федоров", "Всеволод", "Кириллович"));
+            listQueue.Add(new Person("Муравьев", "Роман", "Сергеевич"));
+            listQueue.Add(new Person("Макаров", "Мирослав", "Артемьевич"));
+            listQueue.Add(new Person("Фомина", "Серафима", "Германовна"));
+            listQueue.Add(new Person("Казаков", "Иван", "Кириллович"));
+            listQueue.Add(new Person("Цветков", "Билал", "Михайлович"));
+            listQueue.Add(new Person("Попова", "Александра", "Фёдоровна"));
+            listQueue.Add(new Person("Вдовина", "Екатерина", "Семёновна"));
+            listQueue.Add(new Person("Петрова", "Диана", "Ивановна"));
+            listQueue.Add(new Person("Федоров", "Всеволод", "Кириллович"));
+            listQueue.Add(new Person("Копылова", "Ева", "Юрьевна"));
 
-
-
-
+            listQueue.GetMassive();
 
             Console.ReadKey();
             Console.Clear();
@@ -79,7 +92,7 @@ namespace Lab5_OOP
             get { return _name; }
             set
             {
-                if(string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value)) throw new ArgumentNullException("_name", "Name is Empty");
+                if(string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value)) throw new Exception("Имя не должно быть пустым");
                 if(value.Any(x => char.IsDigit(x))) throw new Exception("Имя недолжно содержать цифр");
 
                 _name = value;
@@ -90,7 +103,7 @@ namespace Lab5_OOP
             get { return _surname; }
             set
             {
-                if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value)) throw new ArgumentNullException("_surname", "Surname is Empty");
+                if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value)) throw new Exception("Фамилия не должна быть пустой");
                 if (value.Any(x => char.IsDigit(x))) throw new Exception("Фамилия недолжно содержать цифр");
 
                 _surname = value;
@@ -101,7 +114,7 @@ namespace Lab5_OOP
             get { return _patronomic; }
             set
             {
-                if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value)) throw new ArgumentNullException("_patronomic", "Patronomic is Empty");
+                if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value)) throw new Exception("Отчество не должно быть пустым");
                 if (value.Any(x => char.IsDigit(x))) throw new Exception("Отчество недолжно содержать цифр");
 
                 _patronomic = value;
@@ -112,7 +125,7 @@ namespace Lab5_OOP
             get { return _department; }
             set
             {
-                if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value)) throw new ArgumentNullException("_department");
+                if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value)) throw new Exception("Отдел не должно быть пустой");
 
                 _department = value;
             }
@@ -182,13 +195,12 @@ namespace Lab5_OOP
             }
             else
             {
-                Console.WriteLine("Сотрудник сможет выйти на пенсию, через " + (_retirementAge - employee._age) + "  лет");
+                Console.WriteLine("Сотрудник сможет выйти на пенсию, через " + (_retirementAge - employee._age) + " лет");
             }
         }
         public override string ToString()
         {
-            return "Full name " + _name + " " + _surname + " " + _patronomic + ". Department " + _department + ". Age " + _age;
+            return "Полное имя " + _name + " " + _surname + " " + _patronomic + ". Отдел " + _department + ". Возвраст " + _age;
         }
     }
-
 }

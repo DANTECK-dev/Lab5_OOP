@@ -38,6 +38,15 @@
         private Node? head = null;
         private Node? tail = null;
         int count = 0;
+        public int Count
+        {
+            get { return count; }
+            private set
+            {
+                if (count < 0) throw new ArgumentNullException();
+                count = value;
+            }
+        }
         public void Add(Person person)
         {
             Node? node = new()
@@ -51,6 +60,7 @@
 
             if (tail != null)
                 tail.Next = node;
+            node.Prev = tail;
             tail = node;
 
             count++;
@@ -71,6 +81,8 @@
                 return null;
             }
             head = head.Next;
+            head!.Prev = null;
+
             Console.WriteLine(person.ToString() + " Removed");
             count--;
             return person;
@@ -122,7 +134,7 @@
             {
                 if (index == i)
                 {
-                    cur.Data = person;
+                    cur!.Data = person;
                     return;
                 }
                 cur = cur?.Next;
@@ -137,38 +149,25 @@
         }
         private void Sort()
         {
-            int min = 0;
-            int max = count - 1;
-            int dir = min;
-            do
+            for(int i = 1; i < count; i++)
             {
-                for (int i = min; i <= max; i++)
+                Person? cur = Get(i);
+                
+                for (int j = i; j >= 0; j--)
                 {
-                    if ((i + 1) >= count) continue;
-                    //Console.WriteLine((int) Get(i)?.ToString()[0] + " > " + (int) Get(i + 1)?.ToString()[0]);
-                    if (Get(i)?.ToString()[0] > Get(i + 1)?.ToString()[0])
+                    Set(Get(j - 1), j);
+                    if (j == 0)
                     {
-                        Person? temp = Get(i);
-                        Set(Get(i + 1), i);
-                        Set(temp, i + 1);
-                        dir = i + 1;
+                        Set(cur, j);
+                        break;
+                    }
+                    if (cur!.ToString()[0] > Get(j - 1)?.ToString()[0] || cur!.ToString()[0] == Get(j - 1)?.ToString()[0])
+                    {
+                        Set(cur, j);
+                        break;
                     }
                 }
-                max = dir;
-                for (int i = max; min <= i; i--)
-                {
-                    if ((i - 1) < 0) continue;
-                    //Console.WriteLine(Get(i)?.ToString()[0] + " < " + Get(i - 1)?.ToString()[0]);
-                    if (Get(i)?.ToString()[0] < Get(i - 1)?.ToString()[0])
-                    {
-                        Person? temp = Get(i);
-                        Set(Get(i - 1), i);
-                        Set(temp, i - 1);
-                        dir = i - 1;
-                    }
-                }
-                min = dir;
-            } while (min != max);
+            }   
         }
         private void Print()
         {
